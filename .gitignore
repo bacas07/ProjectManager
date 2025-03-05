@@ -1,0 +1,23 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencias
+node_modules/
+
+# Directorios de build y dist (TypeScript)
+dist/
+build/
+
+# Archivos de configuración o caché de TypeScript
+*.tsbuildinfo
+
+# Variables de entorno
+.env
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
