@@ -1,6 +1,6 @@
-import express, {NextFunction, Request, RequestHandler, Response} from "express";
+import express, { NextFunction, Request, RequestHandler, Response}  from "express";
 import bodyParser from "body-parser";
-import { timeStamp } from "console";
+import { env } from "./config/env.js"
 
 const server = express();
 
@@ -17,7 +17,7 @@ const checkHealthHandler: RequestHandler = (req: Request, res: Response) => {
 server.get('/', helloHandler);
 server.get('/health', checkHealthHandler);
 
-const PORT = process.env.PORT || 3000;
+const PORT = env.PORT || 5000;
 
 server.listen(PORT, () => {
     console.log(`🚀 Servidor listo en: http://localhost:${PORT}
