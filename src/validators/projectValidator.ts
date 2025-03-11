@@ -1,4 +1,4 @@
-import { string, z } from "zod";
+import { z } from "zod";
 
 const stagesJSONSchema = z.object({
     name: z.string().min(1, 'Name stage is required').max(100),
@@ -13,9 +13,9 @@ const stagesJSONSchema = z.object({
 
 export const projectInputSchema = z.object({
     name: z.string().min(1, 'Name project is required').max(100),
-    description: z.string().min(1, 'Description projecti is required').max(2000),
+    description: z.string().min(1, 'Description project is required').max(2000),
     stack: z.string().min(1, 'Stack project is required').max(50),
-    stages: stagesJSONSchema,
+    stages: z.array(stagesJSONSchema),
     createdBy: z.string().min(1, 'User ID project is required').max(100),
-    deadline: z.date()
+    deadline: z.union([z.date(), z.string().datetime()])
 });
