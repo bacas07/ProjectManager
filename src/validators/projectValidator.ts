@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { string, z } from "zod";
 
 const stagesJSONSchema = z.object({
     name: z.string().min(1, 'Name stage is required').max(100),
@@ -7,11 +7,14 @@ const stagesJSONSchema = z.object({
     status: z.enum(['pending', 'in-progress', 'done'])
 });
 
+const technologiesJSONSchema = z.object({
+    name: z.string().min(1, 'Name technologies is required').max(50)
+});
 
 export const projectInputSchema = z.object({
     name: z.string().min(1, 'Name project is required').max(100),
     description: z.string().min(1, 'Description project is required').max(2000),
-    technologies: z.string().min(1, 'technologies project is required').max(50),
+    technologies: z.array(technologiesJSONSchema),
     stages: z.array(stagesJSONSchema),
     createdBy: z.string().min(1, 'User ID project is required').max(100),
     deadline: z.union([z.date(), z.string().datetime()])
