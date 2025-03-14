@@ -1,11 +1,11 @@
 import { Schema, Document, model } from "mongoose";
 
-interface IStage {
+interface IStage extends Document {
     name: string;
     description: string;
     estimatedTime: number;
     status: "pending" | "in-progress" | "done";
-}
+};
 
 interface IProject extends Document {
     name: string;
@@ -14,7 +14,7 @@ interface IProject extends Document {
     stages: IStage[];
     createdBy: string;
     deadline: Date;
-}
+};
 
 const stagesSchema = new Schema<IStage>({
     name: {
@@ -76,5 +76,5 @@ const projectSchema = new Schema<IProject>({
     timestamps: true
 });
 
-const Project = model<IProject>("Project", projectSchema);
-export default Project
+const Project = model<IProject>('Project', projectSchema);
+export default Project;
