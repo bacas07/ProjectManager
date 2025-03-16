@@ -1,3 +1,4 @@
+import { error } from "console";
 import User, { IUser } from "../schemas/userSchema";
 import {FilterQuery} from 'mongoose'
 
@@ -20,11 +21,21 @@ class UserModel {
         }
     }
 
-    async find (filter: FilterQuery<IUser>): Promise<IUser | null> { // Problemas de tipado por mongoose, FilterQuery para definir filtro de busqueda
+    async find (filter: FilterQuery<IUser>): Promise<IUser | null> { // FilterQuery para definir filtro de busqueda de mongoose
         try {
             return await User.findOne(filter);
         } catch (error) {
             console.error('Error User find: ', error);
+            return null;
+        }
+    }
+
+    async create (data: Partial<IUser>): Promise<IUser | null> {
+        try {
+            const newUser = new User(data);
+            return await newUser.save();
+        } catch (error) {
+            console.error('Error User create: ', error);
             return null;
         }
     }
