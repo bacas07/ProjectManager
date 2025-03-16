@@ -1,9 +1,8 @@
 import { Schema, Document, model } from "mongoose";
-import { string } from "zod";
 
 interface IMessages extends Document {
-    sender: String,
-    content: String
+    sender: string,
+    content: string
 };
 
 interface IStages extends Document {
@@ -14,15 +13,15 @@ interface IStages extends Document {
 };
 
 interface IContext extends Document {
-    projectOverview: String,
+    projectOverview: string,
     stages: [IStages],
-    technologies: [String],
+    technologies: [string],
     lastUpdated: Date,
-    conversationSummary: String
+    conversationSummary: string
 };
 
 interface IChat extends Document {
-    project: String,
+    project: string,
     messages: [IMessages],
     context: IContext
 };
@@ -95,7 +94,7 @@ const contextSchema = new Schema<IContext>({
 
 const chatSchema = new Schema<IChat>({
     project: {
-        type: string,
+        type: String,
         required: true,
         minlength: 1,
         maxlength: 50
