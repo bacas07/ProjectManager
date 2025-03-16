@@ -49,13 +49,14 @@ class UserModel {
         }
     }
 
-    /*(async delete (user_id: string): Promise<IUser | null> {
+    async delete (user_id: string): Promise<IUser | null> {
         try {
-            return await User.findByIdAndDelete(user_id);
+            return await User.findByIdAndUpdate(user_id, { status: false }, { new: true });
         } catch (error) {
-            
+            console.error('Error User delete: ', error);
+            return null;
         }
-    }*/
+    }
 }
 
 export default new UserModel();
