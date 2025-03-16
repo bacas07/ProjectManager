@@ -1,10 +1,11 @@
-import { Schema, Document, model } from "mongoose";
+import { Schema, Document, model, trusted } from "mongoose";
 
 export interface IUser extends Document {
     username: string;
     email: string;
     password: string;
-    role: "admin" | "user" | "dev";
+    role: 'admin' | 'user' | 'dev';
+    status: boolean;
 }
 
 const userSchema = new Schema<IUser>({
@@ -31,8 +32,14 @@ const userSchema = new Schema<IUser>({
     },
     role: {
         type: String,
-        required: true,
-        enum: ["admin", "user", "dev"]
+        required: false,
+        enum: ["admin", "user", "dev"],
+        default: 'user'
+    },
+    status: {
+        type: Boolean,
+        required: false,
+        default: true
     }
 }, {
     timestamps: true
