@@ -39,6 +39,15 @@ class UserModel {
             return null;
         }
     }
+
+    async update (user_id: string, data: Partial<IUser>): Promise<IUser | null> {
+        try {
+            return await User.findByIdAndUpdate(user_id, data, { new: true });
+        } catch (error) {
+            console.error('Error User update: ', error);
+            return null;
+        }
+    }
 }
 
 export default new UserModel();
