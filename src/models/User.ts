@@ -10,14 +10,14 @@ class UserModel {
         }
     }
 
-    /*async findByID (user_id: string): Promise<IUser[] | null> {
+    async findByID (user_id: string): Promise<IUser[] | null> {
         try {
             return await User.findById(user_id);
         } catch (error) {
             console.error('Error User findByID: ', error);
             return null;
         }
-    }*/
+    }
 }
 
 export default new UserModel();
