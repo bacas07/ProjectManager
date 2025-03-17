@@ -28,4 +28,13 @@ class ProjectModel {
             return null;
         }
     }
+
+    async findOne (filter: FilterQuery<IProject>): Promise<IProject[] | null> {
+        try {
+            return await Project.findOne(filter);
+        } catch (error) {
+            console.error('Error Project findOne: ', error)
+            return null;
+        }
+    }
 }
