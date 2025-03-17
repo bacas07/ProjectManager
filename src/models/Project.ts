@@ -11,18 +11,18 @@ class ProjectModel {
         }
     }
 
-    async findByID (project_id: string): Promise<IProject[] | null> {
+    async findByID (projectID: string): Promise<IProject[] | null> {
         try {
-            return await Project.findById(project_id);
+            return await Project.findById(projectID);
         } catch (error) {
             console.error('Error Project findByID: ', error);
             return null;
         }
     }
 
-    async findByUserID (user_id: FilterQuery<IProject>): Promise<IProject[] | null> {
+    async findByUserID (userID: FilterQuery<IProject>): Promise<IProject[] | null> {
         try {
-            return await Project.findOne(user_id);
+            return await Project.findOne(userID);
         } catch (error) {
             console.error('Error Project findByUserID: ', error);
             return null;
@@ -44,6 +44,15 @@ class ProjectModel {
             return await newProject.save();
         } catch (error) {
             console.error('Error Project create: ', error);
+            return null;
+        }
+    }
+
+    async update (projectID: string, data: Partial<IProject>): Promise<IProject | null> {
+        try {
+            return await Project.findByIdAndUpdate(projectID, data, { new: true });
+        } catch (error) {
+            console.error('Error Project update: ', error);
             return null;
         }
     }
