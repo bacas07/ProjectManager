@@ -19,4 +19,13 @@ class ProjectModel {
             return null;
         }
     }
+
+    async findByUserID (user_id: FilterQuery<IProject>): Promise<IProject[] | null> {
+        try {
+            return await Project.findOne(user_id);
+        } catch (error) {
+            console.error('Error Project findByUserID: ', error);
+            return null;
+        }
+    }
 }
