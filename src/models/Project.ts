@@ -37,4 +37,14 @@ class ProjectModel {
             return null;
         }
     }
+
+    async create (data: Partial<IProject>): Promise<IProject | null> { // No se retorna un array de IProject, solo la instacia creada
+        try {
+            const newProject = new Project(data);
+            return await newProject.save();
+        } catch (error) {
+            console.error('Error Project create: ', error);
+            return null;
+        }
+    }
 }
