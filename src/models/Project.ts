@@ -10,4 +10,13 @@ class ProjectModel {
             return null;
         }
     }
+
+    async findByID (project_id: string): Promise<IProject[] | null> {
+        try {
+            return await Project.findById(project_id);
+        } catch (error) {
+            console.error('Error Project findByID: ', error);
+            return null;
+        }
+    }
 }
