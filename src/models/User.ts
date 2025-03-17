@@ -20,7 +20,7 @@ class UserModel {
         }
     }
 
-    async findOne (filter: FilterQuery<IUser>): Promise<IUser | null> { // FilterQuery para definir filtro de busqueda de mongoose.
+    async findOne (filter: FilterQuery<IUser>): Promise<IUser[] | null> { // FilterQuery para definir filtro de busqueda de mongoose.
         try {
             return await User.findOne(filter);
         } catch (error) {

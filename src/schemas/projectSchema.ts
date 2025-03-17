@@ -14,6 +14,7 @@ export interface IProject extends Document {
     stages: IStage[];
     createdBy: string;
     deadline: Date;
+    status: boolean
 };
 
 const stagesSchema = new Schema<IStage>({
@@ -70,6 +71,11 @@ const projectSchema = new Schema<IProject>({
     deadline: {
         type: Date,
         required: true
+    },
+    status: {
+        type: Boolean,
+        required: false,
+        default: true
     }
 },
 {

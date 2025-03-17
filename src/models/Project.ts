@@ -56,4 +56,13 @@ class ProjectModel {
             return null;
         }
     }
+
+    async delete (projectID: string): Promise<IProject | null> {
+        try {
+            return await Project.findByIdAndUpdate(projectID, { status: false }, { new: true });
+        } catch (error) {
+            console.error('Error Project delete: ', error);
+            return null;
+        }
+    }
 }
