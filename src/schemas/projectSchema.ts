@@ -7,7 +7,7 @@ interface IStage extends Document {
     status: "pending" | "in-progress" | "done";
 };
 
-interface IProject extends Document {
+export interface IProject extends Document {
     name: string;
     description: string;
     technologies: string[];

@@ -1,4 +1,3 @@
-import { error } from "console";
 import User, { IUser } from "../schemas/userSchema";
 import {FilterQuery} from 'mongoose'
 
@@ -21,7 +20,7 @@ class UserModel {
         }
     }
 
-    async find (filter: FilterQuery<IUser>): Promise<IUser | null> { // FilterQuery para definir filtro de busqueda de mongoose
+    async findOne (filter: FilterQuery<IUser>): Promise<IUser | null> { // FilterQuery para definir filtro de busqueda de mongoose.
         try {
             return await User.findOne(filter);
         } catch (error) {
@@ -49,7 +48,7 @@ class UserModel {
         }
     }
 
-    async delete (user_id: string): Promise<IUser | null> {
+    async delete (user_id: string): Promise<IUser | null> { // No elimina, solo cambia a un estado innactivo.
         try {
             return await User.findByIdAndUpdate(user_id, { status: false }, { new: true });
         } catch (error) {
