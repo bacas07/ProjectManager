@@ -11,7 +11,7 @@ import {
   toLowerCase,
   literal,
   boolean,
-} from 'valibot'
+} from 'valibot';
 
 export const userInputSchema = object({
   // Puro sufrimiento pasar de zod a valibot :|
@@ -50,9 +50,9 @@ export const userInputSchema = object({
   ),
 
   status: optional(pipe(boolean()), true),
-})
+});
 
-console.log('esta vaina no sirve')
+console.log('esta vaina no sirve');
 
 /*
 export const userInputSchema = z.object({
