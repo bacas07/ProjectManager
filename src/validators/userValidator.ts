@@ -53,6 +53,8 @@ export const userInputSchema = object({ // Puro sufrimiento pasar de zod a valib
     )
 })
 
+console.log("esta vaina no sirve")
+
 
 
 /*
