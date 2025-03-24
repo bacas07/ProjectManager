@@ -61,6 +61,11 @@ class ChatModel {
 
   async delete(chatID: String): Promise<IChat | null> {
     try {
+      return await Chat.findByIdAndUpdate(
+        chatID,
+        { status: false },
+        { new: true }
+      );
     } catch (error) {
       console.error('Error Chat delete: ', error);
       return null;
