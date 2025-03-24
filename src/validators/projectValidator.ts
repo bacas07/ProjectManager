@@ -8,7 +8,6 @@ import {
   array,
   union,
   date,
-  description,
   optional,
   literal,
 } from 'valibot';
@@ -43,26 +42,35 @@ const stagesJsonSchema = object({
 const technologiesJsonSchema = object({
   name: pipe(
     string(),
-    minLength(1, 'Technologie requires minimun 5 characters'),
-    maxLength(100, 'Technologies requires maximum 50 characters')
+    minLength(1, 'Technologies requires minimun 1 characters'),
+    maxLength(100, 'Technologies requires maximum 100 characters')
   ),
 });
 
 export const projectInputSchema = object({
   name: pipe(
     string(),
-    minLength(1, 'Project name required minimun 5 characters')
+    minLength(1, 'Project name requires minimun 1 characters'),
+    maxLength(100, 'Project name requires maximum 100 characters')
   ),
 
-  description: pipe(),
+  description: pipe(
+    string(),
+    minLength(5, 'Project description requires minimum 5 characters'),
+    maxLength(1000, 'Project description requires maximum 1000 characters')
+  ),
 
-  technologies: pipe(),
+  technologies: pipe(array(technologiesJsonSchema)),
 
-  stages: pipes(),
+  stages: pipe(array(stagesJsonSchema)),
 
-  createdBy: pipes(),
+  createdBy: pipe(
+    string(),
+    minLength(1, 'User ID project is required'),
+    maxLength(100, 'User ID project requires maximum 100 characters')
+  ),
 
-  deadline: pipes(),
+  deadline: pipe(date()),
 });
 
 /*const stagesJSONSchema = z.object({
