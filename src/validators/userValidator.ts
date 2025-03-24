@@ -20,8 +20,8 @@ export const userInputSchema = object({
     string(),
     toLowerCase(),
     trim(),
-    minLength(5, 'username requires minimum 5 characters'),
-    maxLength(50, 'username requires maximun 5 characters')
+    minLength(5, 'Username requires minimum 5 characters'),
+    maxLength(50, 'Username requires maximun 5 characters')
   ),
 
   email: pipe(
@@ -30,14 +30,14 @@ export const userInputSchema = object({
     toLowerCase(),
     trim(),
     email('Input a valid email'),
-    minLength(5, 'email requires minimum 5 characters'),
-    maxLength(320, 'email requires miximum 320 characters')
+    minLength(5, 'Email requires minimum 5 characters'),
+    maxLength(320, 'Email requires miximum 320 characters')
   ),
 
   password: pipe(
     string(),
-    minLength(8, 'password requires minimum 8 characters'),
-    maxLength(255, 'password required maximun 255 characters')
+    minLength(8, 'Password requires minimum 8 characters'),
+    maxLength(255, 'Password required maximun 255 characters')
   ),
 
   role: optional(
@@ -51,8 +51,6 @@ export const userInputSchema = object({
 
   status: optional(pipe(boolean()), true),
 });
-
-console.log('esta vaina no sirve');
 
 /*
 export const userInputSchema = z.object({
