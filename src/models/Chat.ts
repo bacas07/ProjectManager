@@ -49,4 +49,21 @@ class ChatModel {
       return null;
     }
   }
+
+  async update(chatID: String, data: Partial<IChat>): Promise<IChat | null> {
+    try {
+      return await Chat.findByIdAndUpdate(chatID, data, { new: true });
+    } catch (error) {
+      console.error('Error Chat update: ', error);
+      return null;
+    }
+  }
+
+  async delete(chatID: String): Promise<IChat | null> {
+    try {
+    } catch (error) {
+      console.error('Error Chat delete: ', error);
+      return null;
+    }
+  }
 }
