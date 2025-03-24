@@ -20,10 +20,11 @@ interface IContext extends Document {
   conversationSummary: string;
 }
 
-interface IChat extends Document {
+export interface IChat extends Document {
   project: string;
   messages: [IMessages];
   context: IContext;
+  status: boolean;
 }
 
 const messagesSchema = new Schema<IMessages>({
@@ -106,6 +107,11 @@ const chatSchema = new Schema<IChat>({
   context: {
     type: contextSchema,
     required: true,
+  },
+  status: {
+    type: Boolean,
+    required: false,
+    default: true,
   },
 });
 
