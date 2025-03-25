@@ -4,14 +4,23 @@ import { FilterQuery } from 'mongoose';
 class UserModel {
   async findAll(): Promise<IUser[] | null> {
     try {
-      return await User.find();
+      return await User.find({ status: true });
     } catch (error) {
-      console.error('Error User findd: ', error);
+      console.error('Error User find: ', error);
       return null;
     }
   }
 
-  async findByID(userID: string): Promise<IUser[] | null> {
+  async findAllUnactive(): Promise<IUser[] | null> {
+    try {
+      return await User.find({ status: false });
+    } catch (error) {
+      console.error('Error User find: ', error);
+      return null;
+    }
+  }
+
+  async findByID(userID: string): Promise<IUser | null> {
     try {
       return await User.findById(userID);
     } catch (error) {
@@ -20,7 +29,7 @@ class UserModel {
     }
   }
   // Metodo para buscar por un campo expecifico, querry mas compleja
-  async findOne(filter: FilterQuery<IUser>): Promise<IUser[] | null> {
+  async findOne(filter: FilterQuery<IUser>): Promise<IUser | null> {
     // FilterQuery para definir filtro de busqueda de mongoose.
     try {
       return await User.findOne(filter);
@@ -33,7 +42,7 @@ class UserModel {
   // Metodo para buscar usuario por su username
   async findByUsername(username: String): Promise<IUser | null> {
     try {
-      return await User.findOne(username);
+      return await User.findOne({ username });
     } catch (error) {
       console.error('Error User findByUsername: ', error);
       return null;
@@ -43,7 +52,7 @@ class UserModel {
   // Metodo para buscar usuario por su email
   async findByEmail(email: String): Promise<IUser | null> {
     try {
-      return await User.findOne(email);
+      return await User.findOne({ email });
     } catch (error) {
       console.error('Error User findByEmail: ', error);
       return null;
