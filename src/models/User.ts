@@ -6,7 +6,7 @@ class UserModel {
     try {
       return await User.find({ status: true });
     } catch (error) {
-      console.error('Error User find: ', error);
+      console.error('Error User findAll: ', error);
       return null;
     }
   }
@@ -15,7 +15,7 @@ class UserModel {
     try {
       return await User.find({ status: false });
     } catch (error) {
-      console.error('Error User find: ', error);
+      console.error('Error User findAllUnactive: ', error);
       return null;
     }
   }
