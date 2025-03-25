@@ -87,6 +87,7 @@ class ProjectModel {
     }
   }
 
+  // Cambio del nombre del metodo ya que este solo simula el borrado
   async softDelete(projectID: string): Promise<IProject | null> {
     try {
       return await Project.findByIdAndUpdate(
@@ -100,6 +101,7 @@ class ProjectModel {
     }
   }
 
+  // Metodo de borrado real, elimina todo registro
   async delete(projectID: string): Promise<IProject | null> {
     try {
       return await Project.findByIdAndDelete(projectID);
