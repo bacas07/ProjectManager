@@ -30,6 +30,15 @@ class UserModel {
     }
   }
 
+  // Metodo para buscar usuario por su username
+  async findByUsername(username: String): Promise<IUser | null> {
+    try {
+    } catch (error) {
+      console.error('Error User findByUsername');
+      return null;
+    }
+  }
+
   async create(data: Partial<IUser>): Promise<IUser | null> {
     try {
       const newUser = new User(data);
