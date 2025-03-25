@@ -49,7 +49,7 @@ class ProjectModel {
   // Metodo para buscar proyecto por su etapa actual
   async findByStage(stage: string): Promise<IProject[] | null> {
     try {
-      stage.toLowerCase();
+      stage = stage.toLowerCase();
       // Primero se verifica que el stage ingresado sea valido
       if (!Object.values(Stages).includes(stage as Stages)) {
         console.error(
@@ -87,13 +87,22 @@ class ProjectModel {
     }
   }
 
-  async delete(projectID: string): Promise<IProject | null> {
+  async softDelete(projectID: string): Promise<IProject | null> {
     try {
       return await Project.findByIdAndUpdate(
         projectID,
         { status: false },
         { new: true }
       );
+    } catch (error) {
+      console.error('Error Project softDelete: ', error);
+      return null;
+    }
+  }
+
+  async delete(projectID: string): Promise<IProject | null> {
+    try {
+      return await Project.findByIdAndDelete(projectID);
     } catch (error) {
       console.error('Error Project delete: ', error);
       return null;
