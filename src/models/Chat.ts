@@ -4,7 +4,16 @@ import { FilterQuery } from 'mongoose';
 class ChatModel {
   async findAll(): Promise<IChat[] | null> {
     try {
-      return await Chat.find();
+      return await Chat.find({ status: true });
+    } catch (error) {
+      console.error('Error Chat find: ', error);
+      return null;
+    }
+  }
+
+  async findAllUnactive(): Promise<IChat[] | null> {
+    try {
+      return await Chat.find({ status: false });
     } catch (error) {
       console.error('Error Chat find: ', error);
       return null;
@@ -82,3 +91,5 @@ class ChatModel {
     }
   }
 }
+
+export default new ChatModel();
