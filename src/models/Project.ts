@@ -1,6 +1,13 @@
 import Project, { IProject } from '../schemas/projectSchema.js';
 import { FilterQuery } from 'mongoose';
 
+// Enum para validar si la etapa buscada es permitida
+enum Stages {
+  pending = 'pending',
+  inProgress = 'in-progress',
+  done = 'done',
+}
+
 class ProjectModel {
   async findAll(): Promise<IProject[] | null> {
     try {
@@ -11,7 +18,7 @@ class ProjectModel {
     }
   }
 
-  async findByID(projectID: string): Promise<IProject[] | null> {
+  async findByID(projectID: String): Promise<IProject[] | null> {
     try {
       return await Project.findById(projectID);
     } catch (error) {
@@ -51,8 +58,26 @@ class ProjectModel {
     }
   }
 
+  // Metodo para buscar proyecto por su etapa actual
+  async findByStage(stage: string): Promise<IProject[] | null> {
+    try {
+      stage.toLowerCase();
+      // Primero se verifica que el stage ingresado sea valido
+      if (!Object.values(Stages).includes(stage as Stages)) {
+        console.error(
+          'Error Project findByStage: El stage proporcionado no es válido'
+        );
+        return null;
+      }
+      return await Project.find({ stage });
+    } catch (error) {
+      console.error('Error Project findByStage');
+      return null;
+    }
+  }
+
   async update(
-    projectID: string,
+    projectID: String,
     data: Partial<IProject>
   ): Promise<IProject | null> {
     try {
@@ -63,7 +88,7 @@ class ProjectModel {
     }
   }
 
-  async delete(projectID: string): Promise<IProject | null> {
+  async delete(projectID: String): Promise<IProject | null> {
     try {
       return await Project.findByIdAndUpdate(
         projectID,
