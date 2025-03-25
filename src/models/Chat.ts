@@ -11,7 +11,7 @@ class ChatModel {
     }
   }
 
-  async findByID(chatID: String): Promise<IChat[] | null> {
+  async findByID(chatID: String): Promise<IChat | null> {
     try {
       return await Chat.findById(chatID);
     } catch (error) {
@@ -24,7 +24,7 @@ class ChatModel {
     projectID: FilterQuery<IChat>
   ): Promise<IChat[] | null> {
     try {
-      return await Chat.findOne(projectID);
+      return await Chat.find({ projectID });
     } catch (error) {
       console.error('Error Chat findByProjectID: ', error);
       return null;
@@ -59,7 +59,7 @@ class ChatModel {
     }
   }
 
-  async delete(chatID: String): Promise<IChat | null> {
+  async softDelete(chatID: String): Promise<IChat | null> {
     try {
       return await Chat.findByIdAndUpdate(
         chatID,
@@ -68,6 +68,16 @@ class ChatModel {
       );
     } catch (error) {
       console.error('Error Chat delete: ', error);
+      return null;
+    }
+  }
+
+  // Metodo de eliminacion real
+  async delete(chatID: string): Promise<IChat | null> {
+    try {
+      return await Chat.findByIdAndDelete(chatID);
+    } catch (error) {
+      console.error('Error User delete: ', error);
       return null;
     }
   }
