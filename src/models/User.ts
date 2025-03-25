@@ -11,15 +11,15 @@ class UserModel {
     }
   }
 
-  async findByID(user_id: string): Promise<IUser[] | null> {
+  async findByID(userID: string): Promise<IUser[] | null> {
     try {
-      return await User.findById(user_id);
+      return await User.findById(userID);
     } catch (error) {
       console.error('Error User findByID: ', error);
       return null;
     }
   }
-  // Metodo para buscar por un campo expecifico, busqueda mas compleja
+  // Metodo para buscar por un campo expecifico, querry mas compleja
   async findOne(filter: FilterQuery<IUser>): Promise<IUser[] | null> {
     // FilterQuery para definir filtro de busqueda de mongoose.
     try {
@@ -60,23 +60,33 @@ class UserModel {
     }
   }
 
-  async update(user_id: string, data: Partial<IUser>): Promise<IUser | null> {
+  async update(userID: string, data: Partial<IUser>): Promise<IUser | null> {
     try {
-      return await User.findByIdAndUpdate(user_id, data, { new: true });
+      return await User.findByIdAndUpdate(userID, data, { new: true });
     } catch (error) {
       console.error('Error User update: ', error);
       return null;
     }
   }
 
-  async delete(user_id: string): Promise<IUser | null> {
-    // No elimina, solo cambia a un estado innactivo.
+  // No elimina, solo cambia a un estado innactivo.
+  async softDelete(userID: string): Promise<IUser | null> {
     try {
       return await User.findByIdAndUpdate(
-        user_id,
+        userID,
         { status: false },
         { new: true }
       );
+    } catch (error) {
+      console.error('Error User softDelete: ', error);
+      return null;
+    }
+  }
+
+  // Metodo de eliminacion real
+  async delete(userID: string): Promise<IUser | null> {
+    try {
+      return await User.findByIdAndDelete(userID);
     } catch (error) {
       console.error('Error User delete: ', error);
       return null;
