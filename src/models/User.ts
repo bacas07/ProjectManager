@@ -19,7 +19,7 @@ class UserModel {
       return null;
     }
   }
-
+  // Metodo para buscar por un campo expecifico, busqueda mas compleja
   async findOne(filter: FilterQuery<IUser>): Promise<IUser[] | null> {
     // FilterQuery para definir filtro de busqueda de mongoose.
     try {
