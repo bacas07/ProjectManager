@@ -33,8 +33,19 @@ class UserModel {
   // Metodo para buscar usuario por su username
   async findByUsername(username: String): Promise<IUser | null> {
     try {
+      return await User.findOne(username);
     } catch (error) {
-      console.error('Error User findByUsername');
+      console.error('Error User findByUsername: ', error);
+      return null;
+    }
+  }
+
+  // Metodo para buscar usuario por su email
+  async findByEmail(email: String): Promise<IUser | null> {
+    try {
+      return await User.findOne(email);
+    } catch (error) {
+      console.error('Error User findByEmail: ', error);
       return null;
     }
   }
