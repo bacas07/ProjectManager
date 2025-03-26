@@ -44,7 +44,29 @@ class ChatModel {
     try {
       return await Chat.findOne(filter);
     } catch (error) {
-      console.error('Error Chat findOne', error);
+      console.error('Error Chat findOne: ', error);
+      return null;
+    }
+  }
+
+  // Crear funcion para agregar nuevos mensajes a un chat
+  async addMessage(
+    chatID: string,
+    sender: string,
+    content: string
+  ): Promise<IChat | null> {
+    try {
+      const message = {
+        sender: sender,
+        content: content,
+      };
+      return await Chat.findByIdAndUpdate(
+        chatID,
+        { $push: { messages: message } },
+        { new: true }
+      );
+    } catch (error) {
+      console.error('Error Chat addMessage: ', error);
       return null;
     }
   }
