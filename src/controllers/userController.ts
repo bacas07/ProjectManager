@@ -53,12 +53,10 @@ export const getUserByID = async (
         .json({ message: `Bad query: user with id ${id} not found` });
     }
 
-    return res
-      .status(200)
-      .json({
-        message: `Query sucessful: user with id ${id} found`,
-        user: user,
-      });
+    return res.status(200).json({
+      message: `Query sucessful: user with id ${id} found`,
+      user: user,
+    });
   } catch (error) {
     next(error);
   }
@@ -100,19 +98,15 @@ export const getUserByUsername = async (
     const user = await User.findByUsername(username);
 
     if (!user) {
-      return res
-        .status(404)
-        .json({
-          message: `Bad query: user with username ${username} not found`,
-        });
+      return res.status(404).json({
+        message: `Bad query: user with username ${username} not found`,
+      });
     }
 
-    return res
-      .status(200)
-      .json({
-        message: `Query sucessful: user with username ${username} found`,
-        user: user,
-      });
+    return res.status(200).json({
+      message: `Query sucessful: user with username ${username} found`,
+      user: user,
+    });
   } catch (error) {
     next(error);
   }
@@ -129,19 +123,15 @@ export const getUserByEmail = async (
     const user = await User.findByEmail(email);
 
     if (!user) {
-      return res
-        .status(404)
-        .json({
-          message: `Bad query: user with email ${email} not found`,
-        });
+      return res.status(404).json({
+        message: `Bad query: user with email ${email} not found`,
+      });
     }
 
-    return res
-      .status(200)
-      .json({
-        message: `Query sucessful: user with email ${email} found`,
-        user: user,
-      });
+    return res.status(200).json({
+      message: `Query sucessful: user with email ${email} found`,
+      user: user,
+    });
   } catch (error) {
     next(error);
   }
@@ -175,6 +165,31 @@ export const createUser = async (
     res
       .status(201)
       .json({ message: 'User registered successfully', user: newUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Funcion para modificar un usuario, cualquier campo
+export const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    const updatedUser = await User.update(id, data);
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        message: `Bad query: user not found with id ${id} or bad data ${data}`,
+      });
+    }
+
+    return res
+      .status(200)
+      .json({ message: 'User updated sucessfully', user: updatedUser });
   } catch (error) {
     next(error);
   }
