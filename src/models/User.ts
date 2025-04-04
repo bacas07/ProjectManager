@@ -40,7 +40,7 @@ class UserModel {
   }
 
   // Metodo para buscar usuario por su username
-  async findByUsername(username: String): Promise<IUser | null> {
+  async findByUsername(username: string): Promise<IUser | null> {
     try {
       return await User.findOne({ username });
     } catch (error) {
@@ -50,7 +50,7 @@ class UserModel {
   }
 
   // Metodo para buscar usuario por su email
-  async findByEmail(email: String): Promise<IUser | null> {
+  async findByEmail(email: string): Promise<IUser | null> {
     try {
       return await User.findOne({ email });
     } catch (error) {
