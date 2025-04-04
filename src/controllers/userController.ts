@@ -194,3 +194,26 @@ export const updateUser = async (
     next(error);
   }
 };
+
+export const softDelete = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const deletedUser = await User.softDelete(id);
+
+    if (!deletedUser) {
+      return res
+        .status(404)
+        .json({
+          message: `Bad query: user not found with id ${id} or deletion failed`,
+        });
+    }
+
+    return res.status(200).json({ message: 'User soft deleted sucessfully' });
+  } catch (error) {
+    next(error);
+  }
+};
