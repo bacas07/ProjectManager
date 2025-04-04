@@ -57,8 +57,28 @@ export const getOneUser = async (
   next: NextFunction
 ) => {
   try {
-    const filter = req.body;
+    const { filter } = req.body;
     const user = await User.findOne(filter);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Funcion para obtener un usuario por su username
+export const getUserByUsername = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { username } = req.body;
+    const user = await User.findByUsername(username);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
