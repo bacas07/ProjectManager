@@ -12,9 +12,20 @@ export const getAllUser = async (
     const allUsers = await User.findAll();
     return res.status(200).json(allUsers);
   } catch (error) {
-    console.error('Error user controller: ', error);
     next(error);
   }
 };
 
-
+// Funcion para obtener todos los usuarios innactivos
+export const getAllUnactiveUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const allUnactiveUsers = await User.findAllUnactive();
+    return res.status(200).json(allUnactiveUsers);
+  } catch (error) {
+    next(error);
+  }
+};
