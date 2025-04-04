@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import User from '../models/User.js';
 import { userInputSchema } from '../validators/userValidator.js';
-import { parse } from 'valibot'
+import { parse } from 'valibot';
 
 // Funcion para obtener todos los usarios
 export const getAllUser = async (
@@ -11,7 +11,10 @@ export const getAllUser = async (
 ) => {
   try {
     const allUsers = await User.findAll();
-    return res.status(200).json(allUsers);
+    return res.status(200).json({
+      message: `Query succesful: ${allUsers?.length} user(s) found`,
+      users: allUsers,
+    });
   } catch (error) {
     next(error);
   }
@@ -25,7 +28,10 @@ export const getAllUnactiveUser = async (
 ) => {
   try {
     const allUnactiveUsers = await User.findAllUnactive();
-    return res.status(200).json(allUnactiveUsers);
+    return res.status(200).json({
+      message: `Query succesful: ${allUnactiveUsers?.length} unactive user(s) found`,
+      users: allUnactiveUsers,
+    });
   } catch (error) {
     next(error);
   }
@@ -42,10 +48,17 @@ export const getUserByID = async (
     const user = await User.findByID(id);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res
+        .status(404)
+        .json({ message: `Bad query: user with id ${id} not found` });
     }
 
-    return res.status(200).json(user);
+    return res
+      .status(200)
+      .json({
+        message: `Query sucessful: user with id ${id} found`,
+        user: user,
+      });
   } catch (error) {
     next(error);
   }
@@ -62,10 +75,15 @@ export const getOneUser = async (
     const user = await User.findOne(filter);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({
+        message: `Bad query: user with filter ${filter} not found`,
+      });
     }
 
-    return res.status(200).json(user);
+    return res.status(200).json({
+      message: `Query sucessful: user with ${filter} found`,
+      user: user,
+    });
   } catch (error) {
     next(error);
   }
@@ -82,10 +100,19 @@ export const getUserByUsername = async (
     const user = await User.findByUsername(username);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res
+        .status(404)
+        .json({
+          message: `Bad query: user with username ${username} not found`,
+        });
     }
 
-    return res.status(200).json(user);
+    return res
+      .status(200)
+      .json({
+        message: `Query sucessful: user with username ${username} found`,
+        user: user,
+      });
   } catch (error) {
     next(error);
   }
@@ -102,10 +129,19 @@ export const getUserByEmail = async (
     const user = await User.findByEmail(email);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res
+        .status(404)
+        .json({
+          message: `Bad query: user with email ${email} not found`,
+        });
     }
 
-    return res.status(200).json(user);
+    return res
+      .status(200)
+      .json({
+        message: `Query sucessful: user with email ${email} found`,
+        user: user,
+      });
   } catch (error) {
     next(error);
   }
@@ -117,22 +153,29 @@ export const createUser = async (
   res: Response,
   next: NextFunction
 ) => {
-    try {
-        // Validacion de datos con valibot
-        const validatedData = parse(userInputSchema, req.body)
-        // Verificacion de existencia de username y email
-        const existingUser = await User.findOne({
-            $or: [{ email: validatedData.email }, { username: validatedData.username }]
-        })
+  try {
+    // Validacion de datos con valibot
+    const validatedData = parse(userInputSchema, req.body);
+    // Verificacion de existencia de username y email
+    const existingUser = await User.findOne({
+      $or: [
+        { email: validatedData.email },
+        { username: validatedData.username },
+      ],
+    });
 
-        if (existingUser) {
-            return res.status(400).json({ message: 'Email or username is alredy taken' })
-        }
-
-        // Creacion del nuevo usuario
-        const newUser = await User.create(validatedData)
-        res.status(201).json({ message: 'User registered successfully', user: newUser })
-    } catch (error) {
-        next(error)
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: 'Email or username is alredy taken' });
     }
+
+    // Creacion del nuevo usuario
+    const newUser = await User.create(validatedData);
+    res
+      .status(201)
+      .json({ message: 'User registered successfully', user: newUser });
+  } catch (error) {
+    next(error);
+  }
 };
