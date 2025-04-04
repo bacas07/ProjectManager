@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import User from '../models/User.js';
 import { userInputSchema } from '../validators/userValidator.js';
+import { parse } from 'valibot'
 
 // Funcion para obtener todos los usarios
 export const getAllUser = async (
@@ -108,4 +109,30 @@ export const getUserByEmail = async (
   } catch (error) {
     next(error);
   }
+};
+
+//Funcion para crear un usuario
+export const createUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+    try {
+        // Validacion de datos con valibot
+        const validatedData = parse(userInputSchema, req.body)
+        // Verificacion de existencia de username y email
+        const existingUser = await User.findOne({
+            $or: [{ email: validatedData.email }, { username: validatedData.username }]
+        })
+
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email or username is alredy taken' })
+        }
+
+        // Creacion del nuevo usuario
+        const newUser = await User.create(validatedData)
+        res.status(201).json({ message: 'User registered successfully', user: newUser })
+    } catch (error) {
+        next(error)
+    }
 };
