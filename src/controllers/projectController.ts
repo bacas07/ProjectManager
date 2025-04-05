@@ -28,12 +28,35 @@ export const getAllUnactiveProject = async (
 ) => {
   try {
     const allUnactiveProjects = await Project.findAllUnactive();
-    return res
-      .status(200)
-      .json({
-        message: `Query sucessful: ${allUnactiveProjects?.length} unactive project(s) found`,
-        projects: allUnactiveProjects,
-      });
+    return res.status(200).json({
+      message: `Query sucessful: ${allUnactiveProjects?.length} unactive project(s) found`,
+      projects: allUnactiveProjects,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Funcion para obtener un proyecto por id
+export const getProjectByID = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const project = await Project.findByID(id);
+
+    if (!project) {
+      return res
+        .status(404)
+        .json({ message: `Bad query: project with id ${id} not found` });
+    }
+
+    return res.status(200).json({
+      message: `Query sucessful: project with id ${id} found`,
+      project: project,
+    });
   } catch (error) {
     next(error);
   }
