@@ -61,3 +61,28 @@ export const getProjectByID = async (
     next(error);
   }
 };
+
+// Funcion para obtener proyectos por el Id del usuario
+export const getProjectByUserID = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const projects = await Project.findByUserID(id);
+
+    if (!projects) {
+      return res.status(404).json({
+        message: `Bad query: projects with user id ${id} not found`,
+      });
+    }
+
+    return res.status(200).json({
+      message: `Query sucessful: ${projects?.length} project(s) with user id ${id} found`,☺
+      projects: projects,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
