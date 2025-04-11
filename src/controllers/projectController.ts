@@ -111,3 +111,11 @@ export const getOneProject = async (
     next(error);
   }
 };
+
+// Funcion para crear proyectos
+
+// Funcion para modificar proyectos
+
+// Funcion para cambiar proyecto a un estado innactivo
+
+// Funcion para eliminar permanentemente un proyecto
