@@ -79,8 +79,33 @@ export const getProjectByUserID = async (
     }
 
     return res.status(200).json({
-      message: `Query sucessful: ${projects?.length} project(s) with user id ${id} found`,☺
+      message: `Query sucessful: ${projects?.length} project(s) with user id ${id} found`,
       projects: projects,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Funcion para realizar consultas complejas a la base de datos
+export const getOneProject = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { filter } = req.body;
+    const project = await Project.findOne(filter);
+
+    if (!project) {
+      return res.status(404).json({
+        message: `Bad query: project with filter: ${filter} not found`,
+      });
+    }
+
+    return res.status(200).json({
+      message: `Query succesful: project with filter ${filter} found`,
+      project: project,
     });
   } catch (error) {
     next(error);
